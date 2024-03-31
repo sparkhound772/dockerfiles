@@ -1,0 +1,40 @@
+FROM archlinux:latest
+
+# Update pacman keyring
+RUN pacman-key --init && \
+    pacman-key --populate archlinux
+
+# Update and upgrade system
+RUN pacman -Syu --noconfirm
+
+# Install zsh
+RUN pacman -S --noconfirm zsh
+
+# Install Git
+RUN pacman -S --noconfirm git
+
+# Install sudo
+RUN pacman -S --noconfirm sudo
+
+# Create a new user and set password
+RUN useradd -m -G wheel -s /bin/zsh user1 && \
+    echo 'user1:changethis' | chpasswd
+
+# Grant sudo privileges to the wheel group with password prompt
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+
+# Install nvim
+RUN pacman -S --noconfirm neovim
+
+# Set default user
+USER user1
+
+# Set working directory to user's home
+WORKDIR /home/user1
+
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
+    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+
+# Start zsh
+CMD ["/bin/zsh"]
+

@@ -36,5 +36,9 @@ WORKDIR /home/user1
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
     echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 
+# Clone dotfiles and append zsh configs to ~/.zshrc
+RUN git clone --depth=1 https://github.com/sparkhound772/dotfiles.git ~/dotfiles && \
+    cat ~/dotfiles/.zshrc >> ~/.zshrc
+
 # Start zsh
 CMD ["/bin/zsh"]

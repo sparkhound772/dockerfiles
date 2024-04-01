@@ -28,7 +28,7 @@ RUN pacman -S --noconfirm neovim
 
 # Install zsh plugins
 RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
-#RUN pacman -S zsh-completions 
+#RUN pacman -S zsh-completions # evaluate this one
 
 # Set default user
 USER user1
@@ -49,6 +49,5 @@ RUN echo 'source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highl
 RUN echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
 RUN echo 'source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh' >> ~/.zshrc
 
-#RUN echo 'source /usr/share/zsh/plugins/zsh-completions/zsh-completions.zsh' >> ~/.zshrc
 # Start zsh
 CMD ["/bin/zsh"]

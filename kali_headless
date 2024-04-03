@@ -19,4 +19,5 @@ WORKDIR /home/user1
 # Start zsh
 CMD ["/bin/zsh"]
 
-# Manually run `apt install kali-linux-headless`
+# Manually install desired metapackages:
+# https://www.kali.org/docs/general-use/metapackages/

@@ -4,7 +4,8 @@ FROM kalilinux/kali-rolling
 RUN apt update && apt upgrade -y
 
 # Install stuff 
-RUN apt install -y zsh sudo kali-linux-headless
+RUN apt install -y zsh sudo
+
 
 # Create new user, add to sudo group and set password
 RUN useradd -m -s /bin/zsh -G sudo user1 && \
@@ -18,3 +19,5 @@ WORKDIR /home/user1
 
 # Start zsh
 CMD ["/bin/zsh"]
+
+# Manually run `apt install kali-linux-headless`

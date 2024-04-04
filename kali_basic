@@ -3,8 +3,16 @@ FROM kalilinux/kali-rolling
 # Update system packages
 RUN apt update && apt upgrade -y
 
+# Set the TERM environment variable, else we get:
+# "debconf: (TERM is not set, so the dialog frontend is not usable.)"
+ENV TERM xterm
+
+# Install first so we so we solve: 
+# "debconf: delaying package configuration, since apt-utils is not installed"
+RUN apt install -y apt-utils
+
 # Install stuff 
-RUN apt install -y zsh sudo vim iputils-ping iproute2 nmap
+RUN apt install -y zsh sudo vim iputils-ping iproute2 nmap zsh-autosuggestions zsh-syntax-highlighting
 
 # Create new user, add to sudo group and set password
 RUN useradd -m -s /bin/zsh -G sudo user1 && \
@@ -21,3 +29,7 @@ CMD ["/bin/zsh"]
 
 # Manually install desired metapackages:
 # https://www.kali.org/docs/general-use/metapackages/
+# Basic:
+# kali-linux-core
+# More or less everything:
+# kali-linux-headless

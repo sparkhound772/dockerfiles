@@ -8,7 +8,11 @@ RUN pacman-key --init && \
 RUN pacman -Syu --noconfirm
 
 # Install tools
-RUN pacman -S --noconfirm zsh git sudo iputils iproute2
+RUN pacman -S --noconfirm zsh git sudo neovim iputils iproute2
+
+# Install zsh plugins
+RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+#RUN pacman -S zsh-completions # evaluate this one
 
 # Create a new user and set password
 RUN useradd -m -G wheel -s /bin/zsh user1 && \
@@ -16,13 +20,6 @@ RUN useradd -m -G wheel -s /bin/zsh user1 && \
 
 # Grant sudo privileges to the wheel group with password prompt
 RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
-
-# Install nvim
-RUN pacman -S --noconfirm neovim
-
-# Install zsh plugins
-RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
-#RUN pacman -S zsh-completions # evaluate this one
 
 # Set default user
 USER user1

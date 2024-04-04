@@ -4,7 +4,7 @@ FROM kalilinux/kali-rolling
 RUN apt update && apt upgrade -y
 
 # Install stuff 
-RUN apt install -y zsh sudo iputils-ping
+RUN apt install -y zsh sudo iputils-ping iproute2
 
 # Create new user, add to sudo group and set password
 RUN useradd -m -s /bin/zsh -G sudo user1 && \

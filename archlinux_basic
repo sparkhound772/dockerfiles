@@ -7,14 +7,8 @@ RUN pacman-key --init && \
 # Update and upgrade system
 RUN pacman -Syu --noconfirm
 
-# Install zsh
-RUN pacman -S --noconfirm zsh
-
-# Install git
-RUN pacman -S --noconfirm git
-
-# Install sudo
-RUN pacman -S --noconfirm sudo
+# Install tools
+RUN pacman -S --noconfirm zsh git sudo iputils iproute2
 
 # Create a new user and set password
 RUN useradd -m -G wheel -s /bin/zsh user1 && \

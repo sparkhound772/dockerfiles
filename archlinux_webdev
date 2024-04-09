@@ -1,0 +1,47 @@
+FROM archlinux:latest
+
+# Update pacman keyring
+RUN pacman-key --init && \
+    pacman-key --populate archlinux
+
+# Update and upgrade system
+RUN pacman -Syyu --noconfirm
+
+# Install tools
+RUN pacman -S --noconfirm zsh git sudo neovim python python-pip gcc iputils iproute2 curl lynx apache nodejs npm
+
+# Install zsh plugins
+RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+#RUN pacman -S zsh-completions # evaluate this one
+
+# Create a new user and set password
+RUN useradd -m -G wheel -s /bin/zsh user1 && \
+    echo 'user1:changethis' | chpasswd
+
+# Grant sudo privileges to the wheel group with password prompt
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+
+# Set default user
+USER user1
+
+# Set working directory to user's home
+WORKDIR /home/user1
+
+# Install powerlevel10k zsh prompt (setup guide will autostart on first run)
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
+    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+
+# Clone dotfiles and append zsh configs to ~/.zshrc
+RUN git clone --depth=1 https://github.com/sparkhound772/dotfiles.git ~/dotfiles && \
+    cat ~/dotfiles/.zshrc >> ~/.zshrc
+
+# Source zsh plugins from .zshrc
+RUN echo 'source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc
+RUN echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
+RUN echo 'source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh' >> ~/.zshrc
+
+# Clone neovim configs
+RUN git clone --depth=1 https://github.com/sparkhound772/nvim.git ~/.config/nvim
+
+# Start zsh
+CMD ["/bin/zsh"]

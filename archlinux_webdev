@@ -7,8 +7,8 @@ RUN pacman-key --init && \
 # Update and upgrade system
 RUN pacman -Syyu --noconfirm
 
-# Install tools
-RUN pacman -S --noconfirm zsh git sudo neovim python python-pip gcc iputils iproute2 curl lynx apache nodejs npm
+# Install stuff
+RUN pacman -S --noconfirm zsh git sudo neovim python python-pip gcc iputils iproute2 curl lynx apache php php-apache nodejs npm
 
 # Install zsh plugins
 RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search

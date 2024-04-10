@@ -10,10 +10,13 @@ RUN pacman -Syyu --noconfirm
 # Install stuff
 RUN pacman -S --noconfirm zsh git sudo neovim python python-pip gcc iputils iproute2 curl nodejs npm
 
+# Apparently already installed after all
+# iputils iproute1 curl sqlite
+
 # For apache with php and sqlite
 # Configure according to: https://wiki.archlinux.org/title/Apache_HTTP_Server
 # Also edit php.ini to enable sqlite support
-RUN pacman -S --noconfirm lynx apache php php-apache sqlite php-sqlite
+RUN pacman -S --noconfirm lynx apache php php-apache php-sqlite
 
 # Install zsh plugins
 RUN pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
